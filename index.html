@@ -1,24 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SMMeter - 골격근량 계산기</title>
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-    input { padding: 10px; margin: 5px; width: 200px; }
-    button { padding: 10px 20px; margin-top: 10px; }
-    #result { margin-top: 30px; font-size: 20px; }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+    }
+
+    .input-group {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    input {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 1em;
+      background-color: #0080ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fcc;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    /* 📱 반응형 미디어 쿼리 */
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      input, button {
+        font-size: 1em;
+        width: 100%;
+      }
+
+      #result {
+        font-size: 1em;
+      }
+    }
   </style>
 </head>
 <body>
 
   <h1>SMMeter</h1>
-  <p>골격근량을 추정하고 SMM 수치를 계산해드립니다</p>
+  <p>골격근량(Skeletal Muscle Mass)을 추정하고 SMM 수치를 계산해드립니다</p>
 
-  <input id="height" placeholder="키 (cm)" type="number"><br>
-  <input id="weight" placeholder="몸무게 (kg)" type="number"><br>
-  <input id="bodyfat" placeholder="체지방률 (%) (선택)" type="number"><br>
-
-  <button onclick="calculateSMM()">측정하기</button>
+  <div class="input-group">
+    <input id="height" placeholder="키 (cm)" type="number">
+    <input id="weight" placeholder="몸무게 (kg)" type="number">
+    <input id="bodyfat" placeholder="체지방률 (%) (선택)" type="number">
+    <button onclick="calculateSMM()">측정하기</button>
+  </div>
 
   <div id="result"></div>
 
@@ -30,11 +97,11 @@
 
       const fatMass = weight * (bodyfat / 100);
       const leanMass = weight - fatMass;
-      const skeletalMuscleMass = leanMass * 0.60; // 60%로 변경
+      const skeletalMuscleMass = leanMass * 0.6; // 60%로 변경
       const smm = skeletalMuscleMass / 30;
 
       document.getElementById("result").innerHTML =
-        `📊 예측 골격근량: <b>${skeletalMuscleMass.toFixed(1)} kg</b><br>
+        `📊 예측 골격근량(SMM): <b>${skeletalMuscleMass.toFixed(1)} kg</b><br>
          💪 SMM 수치: <b>${smm.toFixed(2)} SMM</b><br><br>` +
         interpretSMM(smm);
     }
